@@ -6,8 +6,9 @@ const router = require('./routers/api');
 const app = express(); 
 
 app.use(express.json()); 
+app.use(express.urlencoded({extended: true}));
 
-app.get('/api', router);
+app.use('/api', router);
 app.get('/', (req, res) => res.status(200).sendFile(path.join(__dirname, '../index.html')));
 
 app.use((req, res) => res.status(404).send('Sorry! Couldn\'t find it!'));

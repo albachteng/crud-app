@@ -43,7 +43,9 @@ controller.delete = (req, res, next) => {
 
 // updates a single ToDo, to be run onChange when text area for a todo is manipulated? 
 controller.update = (req, res, next) => {
-    ToDo.findOneAndUpdate(req.body)
+    const searchParams = req.body.search;
+    const updateParams = req.body.update;
+    ToDo.findOneAndUpdate(searchParams, updateParams)
         .then((queryResponse) => {
             res.locals.updated = queryResponse; // the updated doc
             return next(); 
