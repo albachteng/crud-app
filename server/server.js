@@ -1,23 +1,23 @@
+const express = require('express'); 
+const path = require('path'); 
 const mongoose = require('mongoose'); 
-require('dotenv').config();
+const app = express(); 
 
-const uri = process.env.MONGO_URI;
+app.use(express.json()); 
 
-mongoose.connect(uri, {
-    useNewUrlParser: true, 
-    useUnifiedTopology: true, 
-    dbName: 'todo-thang',
-}).then(console.log('connected to MongoDB'))
-  .catch(err => console.log('error connecting to mongoDB: ', err));
+app.get('/', (req, res) => res.status(200).sendFile(path.join(__dirname, '../index.html')));
 
-const Schema = mongoose.Schema;
+app.use((req, res) => res.status(404).send('Sorry! Couldn\'t find it!'));
 
-const toDoSchema = new Schema({
-    toDo: String,
-    date: {type: Date, default: new Date()},
-    completed: {type: Boolean, default: false},
+app.use((err, req, res, next) => {
+    const defaultErr = {
+        log: 'unknown middleware error', 
+        status: 500, 
+        message: {err: 'unknown server error'}
+    };
+    const errorObj = {...defaultErr, ...err};
+    console.log(errorObj); 
+    return res.status(errorObj.status).json(errorObj.message);
 });
 
-const ToDo = mongoose.model('toDo', toDoSchema); 
-
-module.exports = ToDo;
+app.listen(3000, () => console.log('listening on port 3000')); 
