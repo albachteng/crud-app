@@ -12,8 +12,20 @@ document.addEventListener('DOMContentLoaded', e => {
         })
 
     save.addEventListener('click', e => {
-        e.
-    })
+        const toSave = [];
+        console.log(list.children);
+        for (let i = 0; i < list.children.length; i += 1) {
+            toSave.push({toDo: list.children[i].innerHTML});
+        }
+        console.log(toSave);
+        fetch('/api', {
+            method: 'POST', 
+            headers: {'Content-Type': 'application/json'}, 
+            body: JSON.stringify(toSave),
+        })
+            .then(response => response.json())
+            .then(data => console.log(data))
+    });
 });
 
 const buildToDo = (toDoObject) => {

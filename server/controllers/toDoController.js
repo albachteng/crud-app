@@ -2,7 +2,7 @@ const ToDo = require ('../models/toDoModel');
 
 const controller = {};
 
-// saves a single ToDo item, to be run after each ToDo is made in the application 
+// saves one or more ToDo items, to be run after each ToDo is made in the application 
 controller.save = (req, res, next) => {
     ToDo.create(req.body)
         .then((queryResponse) => {
