@@ -19,6 +19,7 @@ controller.save = (req, res, next) => {
 controller.retrieve = (req, res, next) => {
     ToDo.find(req.body) // returns all that match req.body params
         .then((queryResponse) => {
+            console.log(queryResponse);
             res.locals.toDos = queryResponse; // an array
             return next(); 
         })

@@ -9,6 +9,8 @@ app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 
 app.use('/api', router);
+app.use('/', express.static(path.join(__dirname, '../index.html')));
+app.use('/assets', express.static(path.join(__dirname, '../assets')));
 app.get('/', (req, res) => res.status(200).sendFile(path.join(__dirname, '../index.html')));
 
 app.use((req, res) => res.status(404).send('Sorry! Couldn\'t find it!'));
